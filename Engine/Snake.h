@@ -1,6 +1,6 @@
 #pragma once
 #include "Board.h"
-#include "MainWindow.h"
+#include "Keyboard.h"
 
 
 class Snake
@@ -28,7 +28,7 @@ public:
 	Location GetNextHeadLoc(Location& delta_loc);
 	void Grow();
 	void Draw(Board& brd) const;
-	void Movement(Location& delta_loc, MainWindow& wnd);
+	void Movement(Location& delta_loc, Keyboard& kbd);
 	bool InSideSnake(const Location& target) const;
 	
 

@@ -26,7 +26,7 @@ void Goal::Draw(Board& brd) const
 	
 }
 
-void Goal::UpdateColor()
+void Goal::UpdateColor()		//onko käytössä?
 {
 	if (ColorIncr)
 	{

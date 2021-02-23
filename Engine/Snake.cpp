@@ -39,21 +39,21 @@ void Snake::Draw(Board& brd) const
 	}
 }
 
-void Snake::Movement(Location& delta_loc, MainWindow& wnd)
+void Snake::Movement(Location& delta_loc, Keyboard& kbd)
 {
-	if (wnd.kbd.KeyIsPressed(VK_UP))
+	if (kbd.KeyIsPressed(VK_UP))
 	{
 		delta_loc = { 0, -1 };
 	}
-	else if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	else if (kbd.KeyIsPressed(VK_DOWN))
 	{
 		delta_loc = { 0, 1 };
 	}
-	else if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	else if (kbd.KeyIsPressed(VK_LEFT))
 	{
 		delta_loc = { -1, 0 };
 	}
-	else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	else if (kbd.KeyIsPressed(VK_RIGHT))
 	{
 		delta_loc = { 1, 0 };
 	}

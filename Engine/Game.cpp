@@ -47,7 +47,7 @@ void Game::UpdateModel()
 	
 	if (!GameOver)
 	{
-		snek.Movement(delta_loc, wnd);
+		snek.Movement(delta_loc, wnd.kbd);
 		
 		++SnakeMoveCounter;
 		if (SnakeMoveCounter >= SnakeMoveRate)
