@@ -53,8 +53,8 @@ private:
 	std::mt19937 rng;
 	bool GameOver = false;
 	bool Started = false;
-	static constexpr int SnakeMoveRate = 10;
-	int SnakeMoveCounter = 0;
+	float SnakeMoveRate = 10.0f;
+	float SnakeMoveCounter = 0.0f;
 	
 	Board brd;
 	Snake snek;

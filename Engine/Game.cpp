@@ -52,7 +52,7 @@ void Game::UpdateModel()
 		++SnakeMoveCounter;
 		if (SnakeMoveCounter >= SnakeMoveRate)
 		{
-			SnakeMoveCounter = 0;
+			SnakeMoveCounter = 0.0f;
 
 			Location next = snek.GetNextHeadLoc(delta_loc);
 			if (!brd.InSideBoard(next) || snek.InSideSnake(next))
@@ -65,6 +65,10 @@ void Game::UpdateModel()
 				if (eat)
 				{
 					snek.Grow();
+					if (SnakeMoveRate >= 4.0f)
+					{
+						SnakeMoveRate -= 0.5f;
+					}
 				}
 				snek.SMoveBy(delta_loc);
 				if (eat)

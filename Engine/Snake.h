@@ -38,5 +38,5 @@ private:
 	static constexpr int nSegMax = 100;
 	Segment segments[nSegMax];
 	int nSeg = 1;
-
+	
 };

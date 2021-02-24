@@ -3,7 +3,18 @@
 
 Snake::Snake(const Location loc)
 {
+	constexpr int nBcolors = 4;
+	constexpr Color BodyColors[nBcolors] =
+	{ (100, 240, 100),
+	(150, 245, 140),
+	(120, 250, 110),
+	(60, 230, 95) };
 	segments[0].InitHead(loc);
+
+	for (int i = 0; i < nBcolors; i++)
+	{
+
+	}
 }
 
 void Snake::SMoveBy(Location& delta_loc)
