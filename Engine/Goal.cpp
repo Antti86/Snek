@@ -20,13 +20,16 @@ void Goal::Respawn(std::mt19937& rng, const Board& brd, const Snake& snake)
 	loc = newLoc;
 }
 
+void Goal::SpawnObs(std::mt19937& rng, const Board& brd, const Snake& snake)
+{
+}
+
 void Goal::Draw(Board& brd) const
 {
 	brd.DrawCell(loc, c);
-	
 }
 
-void Goal::UpdateColor()		//onko käytössä?
+void Goal::UpdateColor()	
 {
 	if (ColorIncr)
 	{

@@ -10,8 +10,9 @@ private:
 	class Segment
 	{
 	public:
-		void InitHead(const Location& in_loc);
-		void InitBody();
+		Segment() = default;
+		Segment(const Location& in_loc);
+		void InitBody(Color in_c);
 		void MoveBy(const Location& delta_loc);
 		void Follow(Segment& next);
 		void Draw(Board& brd) const;
@@ -20,7 +21,6 @@ private:
 	private:
 		Location loc;
 		Color c;
-		
 	};
 public:
 	Snake(const Location loc);
@@ -31,10 +31,8 @@ public:
 	void Movement(Location& delta_loc, Keyboard& kbd);
 	bool InSideSnake(const Location& target) const;
 	
-
 private:
 	static constexpr Color HeadColor = Colors::Yellow;
-	static constexpr Color BodyColor = Colors::Green;
 	static constexpr int nSegMax = 100;
 	Segment segments[nSegMax];
 	int nSeg = 1;
