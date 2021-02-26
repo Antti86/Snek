@@ -49,27 +49,14 @@ void Board::DrawBorder()
 	//right
 }
 
-
-void Board::Food::Respawn(std::mt19937& rng, const Snake& snake)
+bool Board::CheckObstacle(const Location& loc) const
 {
-	std::uniform_int_distribution<int> xDist(0, brd.GetGridWidth() - 1);
-	std::uniform_int_distribution<int> yDist(0, brd.GetGridHeight() - 1);
-	Location newLoc;
-	do
-	{
-		newLoc.x = xDist(rng);
-		newLoc.y = yDist(rng);
-	} while (snake.InSideSnake(newLoc));
-
-	loc = newLoc;
+	return Status[loc.y * width + loc.x] == TileStatus::Obstacle;
 }
 
-void Board::Food::Draw() const
+bool Board::CheckFood(const Location& loc) const
 {
-	brd.DrawCell(loc, c);
+	return Status[loc.y * width + loc.x] == TileStatus::Food;
 }
 
-const Location& Board::Food::GetLoaction() const
-{
-	return loc;
-}
+

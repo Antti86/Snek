@@ -1,12 +1,12 @@
 #include "Goal.h"
 
 
-Goal::Goal(std::mt19937& rng, const Board& brd, const Snake& snake)
+Goal::Goal(std::mt19937& rng, Board& brd, const Snake& snake)
 {
 	Respawn(rng, brd, snake);
 }
 
-void Goal::Respawn(std::mt19937& rng, const Board& brd, const Snake& snake)
+void Goal::Respawn(std::mt19937& rng, Board& brd, const Snake& snake)
 {
 	std::uniform_int_distribution<int> xDist(0, brd.GetGridWidth() - 1);
 	std::uniform_int_distribution<int> yDist(0, brd.GetGridHeight() - 1);
@@ -15,8 +15,9 @@ void Goal::Respawn(std::mt19937& rng, const Board& brd, const Snake& snake)
 	{
 		newLoc.x = xDist(rng);
 		newLoc.y = yDist(rng);
-	} while (snake.InSideSnake(newLoc));
+	} while (snake.InSideSnake(newLoc) || brd.CheckObstacle(newLoc));
 
+	brd.Status[newLoc.y * brd.GetGridWidth() + newLoc.x] = Board::TileStatus::Food;
 	loc = newLoc;
 }
 
@@ -58,5 +59,29 @@ const Location& Goal::GetLoaction() const
 
 void Goal::Obstacle::Draw(Board& brd) const
 {
-	brd.DrawCell(ObLoc, obsColor);
+	for (int y = 0; y < brd.GetGridHeight(); y++)
+	{
+		for (int x = 0; x < brd.GetGridWidth(); x++)
+		{
+			if (brd.CheckObstacle({ x, y }))
+			{
+				brd.DrawCell({ x, y }, obsColor);
+			}
+		}
+	}
+}
+
+void Goal::Obstacle::SpawnObstacle(std::mt19937& rng, Board& brd, const Snake& snake)
+{
+	std::uniform_int_distribution<int> xDist(0, brd.GetGridWidth() - 1);
+	std::uniform_int_distribution<int> yDist(0, brd.GetGridHeight() - 1);
+	Location newLoc;
+	do
+	{
+		newLoc.x = xDist(rng);
+		newLoc.y = yDist(rng);
+	} while (snake.InSideSnake(newLoc) || brd.CheckObstacle(newLoc) || brd.CheckFood(newLoc));
+
+	brd.Status[newLoc.y * brd.GetGridWidth() + newLoc.x] = Board::TileStatus::Obstacle;
+	
 }

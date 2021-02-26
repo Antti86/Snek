@@ -55,14 +55,14 @@ void Game::UpdateModel()
 			SnakeMoveCounter = 0.0f;
 
 			Location next = snek.GetNextHeadLoc(delta_loc);
-			if (!brd.InSideBoard(next) || snek.InSideSnake(next))
+			if (!brd.InSideBoard(next) || snek.InSideSnake(next) || brd.CheckObstacle(next))
 			{
 				GameOver = true;
 			}
 			else
 			{
-				const bool eat = next == goal.GetLoaction();
-				if (eat)
+				
+				if (brd.CheckFood(next))
 				{
 					snek.Grow();
 					if (SnakeMoveRate >= 4.0f)
@@ -71,7 +71,7 @@ void Game::UpdateModel()
 					}
 				}
 				snek.SMoveBy(delta_loc);
-				if (eat)
+				if (brd.CheckFood(next))
 				{
 					goal.Respawn(rng, brd, snek);
 				}
@@ -86,6 +86,7 @@ void Game::ComposeFrame()
 	brd.DrawBorder();
 	snek.Draw(brd);
 	goal.Draw(brd);
+	obstacle.Draw(brd);
 	if (GameOver)
 	{
 		SpriteCodex::DrawGameOver(350, 300, gfx);

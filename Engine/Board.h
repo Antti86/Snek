@@ -5,26 +5,14 @@
 
 class Board
 {
+	friend class Goal;
 	enum class TileStatus
 	{
 		Empty,
-		Aplle,
+		Food,
 		Obstacle
 	};
-private:
-	class Food
-	{
-	public:
-		void Respawn(std::mt19937& rng, const class Snake& snake);
-		void Draw() const;
-		const Location& GetLoaction() const;
 
-	private:
-		Color c = { 127, 0, 0 };
-		bool ColorIncr = true;
-		Location loc;
-		Board& brd;
-	};
 public:
 	Board(Graphics& gfx);
 	void DrawCell(const Location& loc, Color c);
@@ -32,7 +20,8 @@ public:
 	int GetGridHeight() const;
 	bool InSideBoard(const Location& loc) const;
 	void DrawBorder();
-	
+	bool CheckObstacle(const Location& loc) const;
+	bool CheckFood(const Location& loc) const;
 
 private:
 	static constexpr int dimension = 16;		//boardin koordinaatit

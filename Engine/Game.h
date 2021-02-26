@@ -60,6 +60,6 @@ private:
 	Snake snek;
 	Location delta_loc = { 1, 0 };
 	Goal goal;
-	
+	Goal::Obstacle obstacle;
 
 };
