@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "Snake.h"
 
 Board::Board(Graphics& gfx)
 	:
@@ -46,4 +47,29 @@ void Board::DrawBorder()
 	//bottom
 	gfx.DrawRect(right - borderwidth, top + borderwidth, right, bottom, borderC);
 	//right
+}
+
+
+void Board::Food::Respawn(std::mt19937& rng, const Snake& snake)
+{
+	std::uniform_int_distribution<int> xDist(0, brd.GetGridWidth() - 1);
+	std::uniform_int_distribution<int> yDist(0, brd.GetGridHeight() - 1);
+	Location newLoc;
+	do
+	{
+		newLoc.x = xDist(rng);
+		newLoc.y = yDist(rng);
+	} while (snake.InSideSnake(newLoc));
+
+	loc = newLoc;
+}
+
+void Board::Food::Draw() const
+{
+	brd.DrawCell(loc, c);
+}
+
+const Location& Board::Food::GetLoaction() const
+{
+	return loc;
 }

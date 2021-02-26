@@ -1,9 +1,30 @@
 #pragma once
 #include "Graphics.h"
 #include "Location.h"
+#include <random>
 
 class Board
 {
+	enum class TileStatus
+	{
+		Empty,
+		Aplle,
+		Obstacle
+	};
+private:
+	class Food
+	{
+	public:
+		void Respawn(std::mt19937& rng, const class Snake& snake);
+		void Draw() const;
+		const Location& GetLoaction() const;
+
+	private:
+		Color c = { 127, 0, 0 };
+		bool ColorIncr = true;
+		Location loc;
+		Board& brd;
+	};
 public:
 	Board(Graphics& gfx);
 	void DrawCell(const Location& loc, Color c);
@@ -24,5 +45,5 @@ private:
 	static constexpr int segPadding = 1;
 	static constexpr Color borderC = Colors::Blue;
 	Graphics& gfx;
-
+	TileStatus Status[width * height] = { TileStatus::Empty };
 };

@@ -20,9 +20,7 @@ void Goal::Respawn(std::mt19937& rng, const Board& brd, const Snake& snake)
 	loc = newLoc;
 }
 
-void Goal::SpawnObs(std::mt19937& rng, const Board& brd, const Snake& snake)
-{
-}
+
 
 void Goal::Draw(Board& brd) const
 {
@@ -54,4 +52,11 @@ void Goal::UpdateColor()
 const Location& Goal::GetLoaction() const
 {
 	return loc;
+}
+
+
+
+void Goal::Obstacle::Draw(Board& brd) const
+{
+	brd.DrawCell(ObLoc, obsColor);
 }
