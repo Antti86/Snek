@@ -11,7 +11,6 @@ Snake::Snake(const Location loc)
 	{10, 130, 40}
 	};
 	
-	
 	for (int i = 0; i < nSegMax; ++i)
 	{
 		segments[i].InitBody(BodyColors[i % nBcolors]);

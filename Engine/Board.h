@@ -10,7 +10,8 @@ class Board
 	{
 		Empty,
 		Food,
-		Obstacle
+		Obstacle,
+		Poison
 	};
 
 public:
@@ -22,6 +23,7 @@ public:
 	void DrawBorder();
 	bool CheckObstacle(const Location& loc) const;
 	bool CheckFood(const Location& loc) const;
+	void ResetStatus(const Location& loc);
 
 private:
 	static constexpr int dimension = 16;		//boardin koordinaatit
@@ -35,4 +37,5 @@ private:
 	static constexpr Color borderC = Colors::Blue;
 	Graphics& gfx;
 	TileStatus Status[width * height] = { TileStatus::Empty };
+
 };

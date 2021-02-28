@@ -73,7 +73,10 @@ void Game::UpdateModel()
 				snek.SMoveBy(delta_loc);
 				if (brd.CheckFood(next))
 				{
+					brd.ResetStatus(goal.GetLoaction());
 					goal.Respawn(rng, brd, snek);
+					obstacle.SpawnObstacle(rng, brd, snek);
+					
 				}
 			}
 		}

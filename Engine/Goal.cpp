@@ -11,12 +11,13 @@ void Goal::Respawn(std::mt19937& rng, Board& brd, const Snake& snake)
 	std::uniform_int_distribution<int> xDist(0, brd.GetGridWidth() - 1);
 	std::uniform_int_distribution<int> yDist(0, brd.GetGridHeight() - 1);
 	Location newLoc;
+	
 	do
 	{
 		newLoc.x = xDist(rng);
 		newLoc.y = yDist(rng);
 	} while (snake.InSideSnake(newLoc) || brd.CheckObstacle(newLoc));
-
+	
 	brd.Status[newLoc.y * brd.GetGridWidth() + newLoc.x] = Board::TileStatus::Food;
 	loc = newLoc;
 }
