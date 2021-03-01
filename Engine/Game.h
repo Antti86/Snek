@@ -55,11 +55,12 @@ private:
 	bool Started = false;
 	float SnakeMoveRate = 10.0f;
 	float SnakeMoveCounter = 0.0f;
+	int ObstacleCounter = 0;
 	
 	Board brd;
 	Snake snek;
 	Location delta_loc = { 1, 0 };
 	Goal goal;
 	Goal::Obstacle obstacle;
-
+	Goal::Poison poison;
 };

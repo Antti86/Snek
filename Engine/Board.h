@@ -23,7 +23,9 @@ public:
 	void DrawBorder();
 	bool CheckObstacle(const Location& loc) const;
 	bool CheckFood(const Location& loc) const;
+	bool CheckPoison(const Location& loc) const;
 	void ResetStatus(const Location& loc);
+	TileStatus GetGontent(const Location& loc) const;
 
 private:
 	static constexpr int dimension = 16;		//boardin koordinaatit
@@ -38,4 +40,11 @@ private:
 	Graphics& gfx;
 	TileStatus Status[width * height] = { TileStatus::Empty };
 
+	class TileContent
+	{
+	public:
+
+	private:
+
+	};
 };

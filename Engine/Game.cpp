@@ -48,12 +48,12 @@ void Game::UpdateModel()
 	if (!GameOver)
 	{
 		snek.Movement(delta_loc, wnd.kbd);
-		
+		poison.SpawnPoison(rng, brd);
 		++SnakeMoveCounter;
 		if (SnakeMoveCounter >= SnakeMoveRate)
 		{
 			SnakeMoveCounter = 0.0f;
-
+			
 			Location next = snek.GetNextHeadLoc(delta_loc);
 			if (!brd.InSideBoard(next) || snek.InSideSnake(next) || brd.CheckObstacle(next))
 			{
@@ -61,22 +61,29 @@ void Game::UpdateModel()
 			}
 			else
 			{
-				
 				if (brd.CheckFood(next))
 				{
 					snek.Grow();
-					if (SnakeMoveRate >= 4.0f)
-					{
-						SnakeMoveRate -= 0.5f;
-					}
 				}
 				snek.SMoveBy(delta_loc);
 				if (brd.CheckFood(next))
 				{
 					brd.ResetStatus(goal.GetLoaction());
 					goal.Respawn(rng, brd, snek);
-					obstacle.SpawnObstacle(rng, brd, snek);
+					ObstacleCounter++;
 					
+					if (ObstacleCounter == 2)
+					{
+						obstacle.SpawnObstacle(rng, brd, snek);
+						ObstacleCounter = 0;
+					}
+				}
+				if (brd.CheckPoison(next))
+				{
+					if (SnakeMoveRate >= 4.0f)
+					{
+						SnakeMoveRate -= 0.5f;
+					}
 				}
 			}
 		}
@@ -90,6 +97,7 @@ void Game::ComposeFrame()
 	snek.Draw(brd);
 	goal.Draw(brd);
 	obstacle.Draw(brd);
+	poison.Draw(brd);
 	if (GameOver)
 	{
 		SpriteCodex::DrawGameOver(350, 300, gfx);

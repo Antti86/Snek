@@ -59,9 +59,19 @@ bool Board::CheckFood(const Location& loc) const
 	return Status[loc.y * width + loc.x] == TileStatus::Food;
 }
 
+bool Board::CheckPoison(const Location& loc) const
+{
+	return Status[loc.y * width + loc.x] == TileStatus::Poison;
+}
+
 void Board::ResetStatus(const Location& loc)
 {
 	Status[loc.y * width + loc.x] = TileStatus::Empty;
+}
+
+Board::TileStatus Board::GetGontent(const Location& loc) const
+{
+	return Status[loc.y * width + loc.x];
 }
 
 

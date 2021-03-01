@@ -3,15 +3,18 @@
 #include "Snake.h"
 #include <random>
 
-class Goal 				//siirr‰ jossain vaiheessa boardin aliluokaks, k‰ytt‰en perint‰‰ ja protected metodeja...ehk‰??
+class Goal 		
 {
 public:
 	class Poison
 	{
 	public:
-
+		void Draw(Board& brd) const;
+		void SpawnPoison(std::mt19937& rng, Board& brd);
 	private:
 		Color PoisonColor = Colors::Purple;
+		static constexpr int nPoison = 30;
+		int iPoison = 0;
 	};
 public:
 	class Obstacle
