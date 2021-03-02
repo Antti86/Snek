@@ -1,10 +1,20 @@
 #include "Board.h"
 #include "Snake.h"
 
-Board::Board(Graphics& gfx)
+Board::Board(Graphics& gfx, std::mt19937& rng, const class Snake& snake, TileStatus content, int nFood, int nPoison)
 	:
-	gfx(gfx)
+	gfx(gfx),
+	nFood(nFood),
+	nPoison(nPoison)
 {
+	for (int i = 0; i < nFood; i++)
+	{
+		SpawnContent(rng, snake, TileStatus::Food);
+	}
+	for (int i = 0; i < nPoison; i++)
+	{
+		SpawnContent(rng, snake, TileStatus::Poison);
+	}
 }
 
 void Board::DrawCell(const Location& loc, Color c)
@@ -14,6 +24,30 @@ void Board::DrawCell(const Location& loc, Color c)
 
 	gfx.DrawRectDim(loc.x * dimension + off_x + segPadding, loc.y * dimension + off_y + segPadding,
 		dimension - segPadding * 2, dimension - segPadding * 2, c);
+}
+
+void Board::DrawContent()
+{
+	for (int y = 0; y < GetGridHeight(); y++)
+	{
+		for (int x = 0; x < GetGridWidth(); x++)
+		{
+			Location Loc = { x, y };
+
+			if (Status[Loc.y * GetGridWidth() + Loc.x] == Board::TileStatus::Food)
+			{
+				DrawCell(Loc, FoodColor);
+			}
+			else if (Status[Loc.y * GetGridWidth() + Loc.x] == Board::TileStatus::Obstacle)
+			{
+				DrawCell(Loc, obsColor);
+			}
+			else if (Status[Loc.y * GetGridWidth() + Loc.x] == Board::TileStatus::Poison)
+			{
+				DrawCell(Loc, PoisonColor);
+			}
+		}
+	}
 }
 
 int Board::GetGridWidth() const
@@ -49,27 +83,39 @@ void Board::DrawBorder()
 	//right
 }
 
-bool Board::CheckObstacle(const Location& loc) const
+void Board::SpawnContent(std::mt19937& rng, const Snake& snake, TileStatus content)
 {
-	return Status[loc.y * width + loc.x] == TileStatus::Obstacle;
+	std::uniform_int_distribution<int> xDist(0, GetGridWidth() - 1);
+	std::uniform_int_distribution<int> yDist(0, GetGridHeight() - 1);
+	Location newLoc;
+
+	do
+	{
+		newLoc.x = xDist(rng);
+		newLoc.y = yDist(rng);
+	} while (snake.InSideSnake(newLoc) || GetContent(newLoc) != TileStatus::Empty );
+
+	if (content == TileStatus::Food)
+	{
+		Status[newLoc.y * GetGridWidth() + newLoc.x] = TileStatus::Food;
+	}
+	else if (content == TileStatus::Obstacle)
+	{
+		Status[newLoc.y * GetGridWidth() + newLoc.x] = TileStatus::Obstacle;
+	}
+	else if (content == TileStatus::Poison)
+	{
+		Status[newLoc.y * GetGridWidth() + newLoc.x] = TileStatus::Poison;
+	}
 }
 
-bool Board::CheckFood(const Location& loc) const
-{
-	return Status[loc.y * width + loc.x] == TileStatus::Food;
-}
-
-bool Board::CheckPoison(const Location& loc) const
-{
-	return Status[loc.y * width + loc.x] == TileStatus::Poison;
-}
 
 void Board::ResetStatus(const Location& loc)
 {
 	Status[loc.y * width + loc.x] = TileStatus::Empty;
 }
 
-Board::TileStatus Board::GetGontent(const Location& loc) const
+Board::TileStatus Board::GetContent(const Location& loc) const
 {
 	return Status[loc.y * width + loc.x];
 }

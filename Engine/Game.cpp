@@ -26,10 +26,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	brd( gfx ),
+	brd( gfx, rng, snek, Board::TileStatus::Food, 3, 60 ),
 	snek( { 10, 4 }),
-	rng(std::random_device () () ),
-	goal(rng, brd, snek)
+	rng(std::random_device () () )
 	
 {
 }
@@ -48,37 +47,36 @@ void Game::UpdateModel()
 	if (!GameOver)
 	{
 		snek.Movement(delta_loc, wnd.kbd);
-		poison.SpawnPoison(rng, brd);
 		++SnakeMoveCounter;
 		if (SnakeMoveCounter >= SnakeMoveRate)
 		{
 			SnakeMoveCounter = 0.0f;
 			
 			Location next = snek.GetNextHeadLoc(delta_loc);
-			if (!brd.InSideBoard(next) || snek.InSideSnake(next) || brd.CheckObstacle(next))
+			if (!brd.InSideBoard(next) || snek.InSideSnake(next) || brd.GetContent(next) == Board::TileStatus::Obstacle)
 			{
 				GameOver = true;
 			}
 			else
 			{
-				if (brd.CheckFood(next))
+				if (brd.GetContent(next) == Board::TileStatus::Food)
 				{
 					snek.Grow();
 				}
 				snek.SMoveBy(delta_loc);
-				if (brd.CheckFood(next))
+				if (brd.GetContent(next) == Board::TileStatus::Food)
 				{
-					brd.ResetStatus(goal.GetLoaction());
-					goal.Respawn(rng, brd, snek);
+					brd.ResetStatus(next);
+					brd.SpawnContent(rng, snek, Board::TileStatus::Food);
 					ObstacleCounter++;
 					
 					if (ObstacleCounter == 2)
 					{
-						obstacle.SpawnObstacle(rng, brd, snek);
+						brd.SpawnContent(rng, snek, Board::TileStatus::Obstacle);
 						ObstacleCounter = 0;
 					}
 				}
-				if (brd.CheckPoison(next))
+				if (brd.GetContent(next) == Board::TileStatus::Poison)
 				{
 					if (SnakeMoveRate >= 4.0f)
 					{
@@ -95,9 +93,7 @@ void Game::ComposeFrame()
 {
 	brd.DrawBorder();
 	snek.Draw(brd);
-	goal.Draw(brd);
-	obstacle.Draw(brd);
-	poison.Draw(brd);
+	brd.DrawContent();
 	if (GameOver)
 	{
 		SpriteCodex::DrawGameOver(350, 300, gfx);

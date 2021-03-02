@@ -5,7 +5,7 @@
 
 class Board
 {
-	friend class Goal;
+public:
 	enum class TileStatus
 	{
 		Empty,
@@ -15,19 +15,19 @@ class Board
 	};
 
 public:
-	Board(Graphics& gfx);
+	Board(Graphics& gfx, std::mt19937& rng, const class Snake& snake, TileStatus content, int nFood, int nPoison);
 	void DrawCell(const Location& loc, Color c);
+	void DrawContent();
 	int GetGridWidth() const;
 	int GetGridHeight() const;
 	bool InSideBoard(const Location& loc) const;
 	void DrawBorder();
-	bool CheckObstacle(const Location& loc) const;
-	bool CheckFood(const Location& loc) const;
-	bool CheckPoison(const Location& loc) const;
+	void SpawnContent(std::mt19937& rng, const class Snake& snake, TileStatus content);
 	void ResetStatus(const Location& loc);
-	TileStatus GetGontent(const Location& loc) const;
+	TileStatus GetContent(const Location& loc) const;
 
 private:
+	Graphics& gfx;
 	static constexpr int dimension = 16;		//boardin koordinaatit
 	static constexpr int width = 40;
 	static constexpr int height = 30;
@@ -37,14 +37,11 @@ private:
 	static constexpr int borderpad = 2;
 	static constexpr int segPadding = 1;
 	static constexpr Color borderC = Colors::Blue;
-	Graphics& gfx;
 	TileStatus Status[width * height] = { TileStatus::Empty };
+	static constexpr Color obsColor = Colors::Gray;
+	static constexpr Color PoisonColor = Colors::Purple;
+	static constexpr Color FoodColor = { 127, 0, 0 };
 
-	class TileContent
-	{
-	public:
-
-	private:
-
-	};
+	int nPoison;
+	int nFood;
 };
