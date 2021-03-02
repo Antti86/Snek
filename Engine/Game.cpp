@@ -78,9 +78,9 @@ void Game::UpdateModel()
 				}
 				if (brd.GetContent(next) == Board::TileStatus::Poison)
 				{
-					if (SnakeMoveRate >= 4.0f)
+					if (SnakeMoveRate >= 3.0f)
 					{
-						SnakeMoveRate -= 0.5f;
+						SnakeMoveRate -= 0.2f;
 					}
 				}
 			}

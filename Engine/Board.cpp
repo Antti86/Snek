@@ -34,17 +34,17 @@ void Board::DrawContent()
 		{
 			Location Loc = { x, y };
 
-			if (Status[Loc.y * GetGridWidth() + Loc.x] == Board::TileStatus::Food)
+			switch (Status[Loc.y * GetGridWidth() + Loc.x])
 			{
+			case Board::TileStatus::Food:
 				DrawCell(Loc, FoodColor);
-			}
-			else if (Status[Loc.y * GetGridWidth() + Loc.x] == Board::TileStatus::Obstacle)
-			{
+				break;
+			case Board::TileStatus::Obstacle:
 				DrawCell(Loc, obsColor);
-			}
-			else if (Status[Loc.y * GetGridWidth() + Loc.x] == Board::TileStatus::Poison)
-			{
+				break;
+			case Board::TileStatus::Poison:
 				DrawCell(Loc, PoisonColor);
+				break;
 			}
 		}
 	}
