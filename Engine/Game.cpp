@@ -26,11 +26,23 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	brd( gfx, rng, snek, Board::TileStatus::Food, 3, 60 ),
+	brd( gfx),
 	snek( { 10, 4 }),
-	rng(std::random_device () () )
+	rng(std::random_device () () ),
+	nPoison(set.GetnPoison()),
+	nFood(set.GetnFood()),
+	ObstacleSpawnRate(set.GetObstacleSpawnRate()),
+	SnakeSpeedUp(set.GetSnakeSpeedUp())
 	
 {
+	for (int i = 0; i < nFood; i++)
+	{
+		brd.SpawnContent(rng, snek, Board::TileStatus::Food);
+	}
+	for (int i = 0; i < nPoison; i++)
+	{
+		brd.SpawnContent(rng, snek, Board::TileStatus::Poison);
+	}
 }
 
 void Game::Go()
@@ -70,7 +82,7 @@ void Game::UpdateModel()
 					brd.SpawnContent(rng, snek, Board::TileStatus::Food);
 					ObstacleCounter++;
 					
-					if (ObstacleCounter == 2)
+					if (ObstacleCounter == ObstacleSpawnRate)
 					{
 						brd.SpawnContent(rng, snek, Board::TileStatus::Obstacle);
 						ObstacleCounter = 0;
@@ -80,7 +92,7 @@ void Game::UpdateModel()
 				{
 					if (SnakeMoveRate >= 3.0f)
 					{
-						SnakeMoveRate -= 0.2f;
+						SnakeMoveRate -= SnakeSpeedUp;
 					}
 				}
 			}

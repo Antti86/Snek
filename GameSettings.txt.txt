@@ -1,6 +1,0 @@
-
-	Number of Poisons = 40
-
-	Number of Food = 4
-
-	

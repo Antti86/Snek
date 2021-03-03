@@ -49,15 +49,21 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	GameSettings set = "GameSettings.txt";
 	
-	std::mt19937 rng;
 	bool GameOver = false;
 	bool Started = false;
+
+	Board brd;
+	std::mt19937 rng;
+	Snake snek;
+	Location delta_loc = { 1, 0 };
 	float SnakeMoveRate = 10.0f;
 	float SnakeMoveCounter = 0.0f;
 	int ObstacleCounter = 0;
-	
-	Board brd;
-	Snake snek;
-	Location delta_loc = { 1, 0 };
+
+	int nPoison;
+	int nFood;
+	int ObstacleSpawnRate;
+	float SnakeSpeedUp;
 };

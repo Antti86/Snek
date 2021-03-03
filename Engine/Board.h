@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Location.h"
+#include "GameSettings.h"
 #include <random>
 
 class Board
@@ -15,7 +16,9 @@ public:
 	};
 
 public:
-	Board(Graphics& gfx, std::mt19937& rng, const class Snake& snake, TileStatus content, int nFood, int nPoison);
+	Board(Graphics& gfx);
+	Board(const Board&) = delete;
+	Board& operator=(const Board&) = delete;
 	void DrawCell(const Location& loc, Color c);
 	void DrawContent();
 	int GetGridWidth() const;
@@ -42,6 +45,5 @@ private:
 	static constexpr Color PoisonColor = Colors::Purple;
 	static constexpr Color FoodColor = { 127, 0, 0 };
 
-	int nPoison;
-	int nFood;
+
 };

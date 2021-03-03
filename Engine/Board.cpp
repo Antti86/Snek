@@ -1,20 +1,11 @@
 #include "Board.h"
 #include "Snake.h"
 
-Board::Board(Graphics& gfx, std::mt19937& rng, const class Snake& snake, TileStatus content, int nFood, int nPoison)
+Board::Board(Graphics& gfx)
 	:
-	gfx(gfx),
-	nFood(nFood),
-	nPoison(nPoison)
+	gfx(gfx)
 {
-	for (int i = 0; i < nFood; i++)
-	{
-		SpawnContent(rng, snake, TileStatus::Food);
-	}
-	for (int i = 0; i < nPoison; i++)
-	{
-		SpawnContent(rng, snake, TileStatus::Poison);
-	}
+
 }
 
 void Board::DrawCell(const Location& loc, Color c)

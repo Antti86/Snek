@@ -1,0 +1,11 @@
+[Number of Poisons]
+100
+
+[Number of Food]
+4
+
+[ObstacleSpawnRate]
+2
+
+[SnakeSpeedUp]
+0.4f
