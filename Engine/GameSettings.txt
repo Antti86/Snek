@@ -2,7 +2,7 @@
 100
 
 [Number of Food]
-4
+6
 
 [ObstacleSpawnRate]
 2

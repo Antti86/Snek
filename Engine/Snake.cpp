@@ -11,9 +11,9 @@ Snake::Snake(const Location loc)
 	{10, 130, 40}
 	};
 	
-	for (int i = 0; i < nSegMax; ++i)
+	for (Segment& i : VecSegments)
 	{
-		segments[i].InitBody(BodyColors[i % nBcolors]);
+		i.InitBody(BodyColors[i % nBcolors]);
 	}
 	segments[0] = Segment(loc);
 }
@@ -29,17 +29,14 @@ void Snake::SMoveBy(Location& delta_loc)
 
 Location Snake::GetNextHeadLoc(Location& delta_loc)
 {
-	Location l(segments[0].GetLocation());
+	Location l(VecSegments.front(segments.GetLocation()));
 	l.Add(delta_loc);
 	return l;
 }
 
 void Snake::Grow()
 {
-	if (nSeg < nSegMax)
-	{
-		++nSeg;
-	}
+	VecSegments.emplace_back(segments.InitBody(c));
 }
 
 void Snake::Draw(Board& brd) const
@@ -70,11 +67,11 @@ void Snake::Movement(Location& delta_loc, Keyboard& kbd)
 	}
 }
 
-bool Snake::InSideSnake(const Location& target) const
+bool Snake::InSideSnake(const Location& target)
 {
-	for (int i = 0; i < nSeg - 1; ++i)
+	for (Segment& i : VecSegments)
 	{
-		if (segments[i].GetLocation() == target)
+		if (i.GetLocation() == target)
 			return true;
 	}
 	return false;

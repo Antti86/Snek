@@ -1,7 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Keyboard.h"
-
+#include <vector>
 
 class Snake
 {
@@ -29,12 +29,12 @@ public:
 	void Grow();
 	void Draw(Board& brd) const;
 	void Movement(Location& delta_loc, Keyboard& kbd);
-	bool InSideSnake(const Location& target) const;
+	bool InSideSnake(const Location& target);
 	
 private:
 	static constexpr Color HeadColor = Colors::Yellow;
-	static constexpr int nSegMax = 100;
-	Segment segments[nSegMax];
+	Segment segments;
+	std::vector<Segment> VecSegments;
 	int nSeg = 1;
 	
 };
