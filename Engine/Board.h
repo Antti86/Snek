@@ -40,6 +40,7 @@ private:
 	static constexpr int borderpad = 2;
 	static constexpr int segPadding = 1;
 	static constexpr Color borderC = Colors::Blue;
+
 	TileStatus Status[width * height] = { TileStatus::Empty };
 	static constexpr Color obsColor = Colors::Gray;
 	static constexpr Color PoisonColor = Colors::Purple;
