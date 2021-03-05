@@ -10,7 +10,6 @@ private:
 	class Segment
 	{
 	public:
-		Segment() = default;
 		Segment(const Location& in_loc);
 		Segment(Color in_c);
 		void MoveBy(const Location& delta_loc);

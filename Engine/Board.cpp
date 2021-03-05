@@ -86,29 +86,21 @@ void Board::SpawnContent(std::mt19937& rng, const Snake& snake, TileStatus conte
 		newLoc.y = yDist(rng);
 	} while (snake.InSideSnake(newLoc) || GetContent(newLoc) != TileStatus::Empty );
 
-	if (content == TileStatus::Food)
-	{
-		Status[newLoc.y * GetGridWidth() + newLoc.x] = TileStatus::Food;
-	}
-	else if (content == TileStatus::Obstacle)
-	{
-		Status[newLoc.y * GetGridWidth() + newLoc.x] = TileStatus::Obstacle;
-	}
-	else if (content == TileStatus::Poison)
-	{
-		Status[newLoc.y * GetGridWidth() + newLoc.x] = TileStatus::Poison;
-	}
+	Status[static_cast<std::vector<Board::TileStatus, std::allocator<Board::TileStatus>>::size_type>
+		(newLoc.y) * GetGridWidth() + newLoc.x] = content;
 }
 
 
 void Board::ResetStatus(const Location& loc)
 {
-	Status[loc.y * width + loc.x] = TileStatus::Empty;
+	Status[static_cast<std::vector<Board::TileStatus, std::allocator<Board::TileStatus>>::size_type>
+		(loc.y) * width + loc.x] = TileStatus::Empty;
 }
 
 Board::TileStatus Board::GetContent(const Location& loc) const
 {
-	return Status[loc.y * width + loc.x];
+	return Status[static_cast<std::vector<Board::TileStatus, std::allocator<Board::TileStatus>>::size_type>
+		(loc.y) * width + loc.x];
 }
 
 

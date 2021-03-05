@@ -8,9 +8,11 @@ Snake::Snake(const Location loc)
 
 void Snake::SMoveBy(const Location& delta_loc)
 {
-	for (int i = VecSegments.size() - 1; i > 0; --i)
+	
+	for (size_t i = VecSegments.size() - 1; i > 0; --i)
 	{
-		VecSegments[i].Follow(VecSegments[i - 1]);
+		VecSegments[i].Follow(VecSegments[static_cast<std::vector<Snake::Segment,
+			std::allocator<Snake::Segment>>::size_type>(i) - 1]);
 	}
 	VecSegments[0].MoveBy(delta_loc);
 }
