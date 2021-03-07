@@ -18,8 +18,6 @@ public:
 
 public:
 	Board(Graphics& gfx);
-	Board(const Board&) = delete;
-	Board& operator=(const Board&) = delete;
 	void DrawCell(const Location& loc, Color c);
 	void DrawContent();
 	int GetGridWidth() const;

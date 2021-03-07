@@ -31,9 +31,9 @@ void Snake::Grow()
 
 void Snake::Draw(Board& brd) const
 {
-	for (int i = 0; i < VecSegments.size(); ++i)
+	for (const Segment& e : VecSegments)
 	{
-		VecSegments[i].Draw(brd);
+		e.Draw(brd);
 	}
 }
 
@@ -41,19 +41,35 @@ void Snake::Movement(Location& delta_loc, Keyboard& kbd)
 {
 	if (kbd.KeyIsPressed(VK_UP))
 	{
-		delta_loc = { 0, -1 };
+		const Location new_delta = { 0, -1 };
+		if (delta_loc != -new_delta || VecSegments.size() <= 2)
+		{
+			delta_loc = new_delta;
+		}
 	}
 	else if (kbd.KeyIsPressed(VK_DOWN))
 	{
-		delta_loc = { 0, 1 };
+		const Location new_delta = { 0, 1 };
+		if (delta_loc != -new_delta || VecSegments.size() <= 2)
+		{
+			delta_loc = new_delta;
+		}
 	}
 	else if (kbd.KeyIsPressed(VK_LEFT))
 	{
-		delta_loc = { -1, 0 };
+		const Location new_delta = { -1, 0 };
+		if (delta_loc != -new_delta || VecSegments.size() <= 2)
+		{
+			delta_loc = new_delta;
+		}
 	}
 	else if (kbd.KeyIsPressed(VK_RIGHT))
 	{
-		delta_loc = { 1, 0 };
+		const Location new_delta = { 1, 0 };
+		if (delta_loc != -new_delta || VecSegments.size() <= 2)
+		{
+			delta_loc = new_delta;
+		}
 	}
 }
 

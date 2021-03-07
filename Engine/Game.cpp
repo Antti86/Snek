@@ -90,6 +90,7 @@ void Game::UpdateModel()
 				}
 				if (brd.GetContent(next) == Board::TileStatus::Poison)
 				{
+					brd.ResetStatus(next);
 					if (SnakeMoveRate >= 3.0f)
 					{
 						SnakeMoveRate -= SnakeSpeedUp;

@@ -12,6 +12,14 @@ struct Location
 	{
 		return x == oikea.x && y == oikea.y;
 	}
+	bool operator !=(const Location& oikea) const
+	{
+		return !(*this == oikea);
+	}
+	Location operator-() const
+	{
+		return { -x, -y };
+	}
 	int x;
 	int y;
 };
